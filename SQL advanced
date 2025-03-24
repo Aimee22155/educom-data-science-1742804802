@@ -1,3 +1,4 @@
+-----#1----
 
 DELIMITER
     $$
@@ -9,6 +10,25 @@ BEGIN
         offices
     WHERE
         country = countryName ;
+END $$
+DELIMITER
+    ;
+
+----#2----
+
+DELIMITER
+    $$
+CREATE PROCEDURE p_get_total_order(IN customerID INT)
+BEGIN
+    SELECT
+        customerNumber,
+        SUM(amount) AS total_order
+    FROM
+        orders
+    WHERE
+        customerNumber = customerID
+    GROUP BY
+        customerNumber ;
 END $$
 DELIMITER
     ;
