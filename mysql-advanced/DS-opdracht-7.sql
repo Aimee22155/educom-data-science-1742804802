@@ -47,6 +47,63 @@ END $$
 DELIMITER ;
 
 ----5----
+CREATE VIEW EmployeeStatusView AS
+SELECT 
+    e.employeeNumber,
+    e.firstName,
+    e.lastName,
+    e.salary,
+    e.date_hired,
+    e.date_fired,
+    check_fired_status(e.date_fired) AS status
+FROM employees e;
+
+----6----
+DELIMITER $$
+
+CREATE PROCEDURE UpdateSalaries()
+
+BEGIN
+    -- Update the salary of all employees (excluding those with 'FIRED' status)
+    UPDATE employees 
+    SET salary = salary * 1.05 
+    WHERE check_fired_status(date_fired) != 'FIRED';
+    
+    -- Log the salary change in the employees table
+    INSERT INTO employees (employeeNumber, oldSalary, newSalary, changeDate)
+    SELECT 
+        employeeNumber, 
+        salary / 1.05 AS oldSalary, 
+        salary * 1.05 AS newSalary, 
+        NOW() AS changeDate
+    FROM employees
+    WHERE check_fired_status(date_fired) != 'FIRED';
+
+END $$
+
+DELIMITER ;
+
+----7----
+DELIMITER $$
+
+CREATE PROCEDURE RemoveFiredEmployees()
+BEGIN
+    DELETE FROM employees
+    WHERE check_fired_status(date_fired) = 'FIRED';
+END $$
+
+DELIMITER ;
+
+----8----
+CREATE TABLE salaryArchive (
+    archiveID INT AUTO_INCREMENT PRIMARY KEY,
+    employeeNumber INT,
+    oldSalary FLOAT,
+    newSalary FLOAT,
+    changeDate DATETIME,
+    FOREIGN KEY (employeeNumber) REFERENCES employees(employeeNumber)
+);
+
 
 
 
