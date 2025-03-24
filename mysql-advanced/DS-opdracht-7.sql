@@ -10,3 +10,25 @@ SET salary = 1000,
 WHERE officeCode BETWEEN 1 AND 7;
 
 ----3----
+DELIMITER $$
+
+CREATE TRIGGER archive_fired_employee
+AFTER DELETE ON employees
+FOR EACH ROW
+
+BEGIN
+    
+    IF OLD.date_fired <= CURDATE() THEN
+        INSERT INTO employee_archive 
+            (employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle, salary, date_hired, date_fired)
+        VALUES 
+            (OLD.employeeNumber, OLD.lastName, OLD.firstName, OLD.extension, OLD.email, OLD.officeCode, OLD.reportsTo, OLD.jobTitle, OLD.salary, OLD.date_hired, OLD.date_fired);
+    END IF;
+
+END$$
+
+DELIMITER ;
+
+----4----
+
+
