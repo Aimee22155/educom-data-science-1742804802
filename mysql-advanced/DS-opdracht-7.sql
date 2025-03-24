@@ -30,5 +30,23 @@ END$$
 DELIMITER ;
 
 ----4----
+DELIMITER $$
+
+CREATE FUNCTION check_fired_status(date_fired DATETIME)
+RETURNS VARCHAR(10)
+DETERMINISTIC
+
+BEGIN
+    IF date_fired IS NULL THEN
+            RETURN '';
+        ELSE
+            RETURN 'FIRED';
+        END IF;
+END $$
+
+DELIMITER ;
+
+----5----
+
 
 
