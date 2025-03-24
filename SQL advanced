@@ -1,23 +1,20 @@
 -----#1----
 
-DELIMITER
-    $$
+DELIMITER $$
 CREATE PROCEDURE p_get_office_by_country(IN countryName VARCHAR(255))
 BEGIN
     SELECT
-        *
+      *
     FROM
         offices
     WHERE
         country = countryName ;
 END $$
-DELIMITER
-    ;
+DELIMITER ;
 
 ----#2----
 
-DELIMITER
-    $$
+DELIMITER $$
 CREATE PROCEDURE p_get_total_order(IN customerID INT)
 BEGIN
     SELECT
@@ -30,5 +27,72 @@ BEGIN
     GROUP BY
         customerNumber ;
 END $$
-DELIMITER
-    ;
+DELIMITER ;
+
+----#3 cursors----
+
+DELIMITER $$
+CREATE PROCEDURE p_create_customer_reporting()
+BEGIN
+    DECLARE finished INTEGER DEFAULT 0 ; 
+        DECLARE customerId INT DEFAULT 0 ; 
+        DECLARE customerName VARCHAR(255) DEFAULT "" ; 
+        DECLARE totalOrderAmount DECIMAL(10, 2) DEFAULT 0.00 ;
+        
+     -- Declare cursor for fetching customer name and total order amount
+     DECLARE curCustomer 
+      	CURSOR FOR
+    		SELECT
+                 c.customer_id,
+                 c.customer_name,
+                 COALESCE(SUM(o.order_amount),
+                 0)
+   			FROM 
+               customers c
+                
+    LEFT JOIN orders o ON
+        c.customer_id = o.customer_id
+    GROUP BY
+        c.customer_id,
+        c.customer_name ;
+        
+    -- Declare NOT FOUND handler
+    DECLARE CONTINUE HANDLER
+   	FOR NOT FOUND SET finished = 1 ;
+            
+    -- Ensure customer_reporting table exists
+	CREATE TABLE IF NOT EXISTS customer_reporting(
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255),
+    total_order_amount DECIMAL(10, 2)
+) ;
+
+-- Clear existing data
+    TRUNCATE TABLE
+    customer_reporting ; 
+   
+    OPEN curCustomer ;
+    
+    getCustomerData : LOOP 
+        FETCH curCustomer
+        INTO customerId, customerName, totalOrderAmount ;
+        IF finished = 1 
+           THEN LEAVE getCustomerData ;
+    END IF;
+
+-- Insert data into customer_reporting table
+INSERT INTO customer_reporting(
+    customer_id,
+    customer_name,
+    total_order_amount
+)
+VALUES(
+    customerId,
+    customerName,
+    totalOrderAmount
+) ;
+END LOOP getCustomerData ; 
+CLOSE curCustomer ; 
+
+END $$
+DELIMITER ;
