@@ -10,24 +10,4 @@ Asus@LAPTOP-SELUM529 MINGW64 ~/bin
 $ jq '.[]' < world-population.json
 
 ----2----
-Asus@LAPTOP-SELUM529 MINGW64 ~/bin
-$ jq '.[10]' < world-population.json
-{
-  "rank": 198,
-  "cca3": "ABW",
-  "country": "Aruba",
-  "capital": "Oranjestad",
-  "continent": "North America",
-  "population_2022": 106445,
-  "population_2020": 106585,
-  "population_2015": 104257,
-  "population_2010": 100341,
-  "population_2000": 89101,
-  "population_1990": 65712,
-  "population_1980": 62267,
-  "population_1970": 59106,
-  "area_km2": 180,
-  "population_density": 591.3611,
-  "population_growth_rate": 0.9991,
-  "percentage_world_population": 0
-}
+
