@@ -1,1 +1,11 @@
+----1----
+Asus@LAPTOP-SELUM529 MINGW64 ~
+$ cd bin
+
+Asus@LAPTOP-SELUM529 MINGW64 ~/bin
+$ dir
+jq.exe  slownodes.jq  world-population.json
+
+Asus@LAPTOP-SELUM529 MINGW64 ~/bin
+$ jq '.[]' < world-population.json
 
