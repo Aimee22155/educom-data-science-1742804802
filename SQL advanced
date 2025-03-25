@@ -41,14 +41,14 @@ BEGIN
         
      -- Declare cursor for fetching customer name and total order amount
      DECLARE curCustomer 
-      	CURSOR FOR
-    		SELECT
-                 c.customer_id,
-                 c.customer_name,
-                 COALESCE(SUM(o.order_amount),
-                 0)
-   			FROM 
-               customers c
+      CURSOR FOR
+    	SELECT
+         c.customer_id,
+         c.customer_name,
+	 COALESCE(SUM(o.order_amount),
+         0)
+	FROM 
+         customers c
                 
     LEFT JOIN orders o ON
         c.customer_id = o.customer_id
