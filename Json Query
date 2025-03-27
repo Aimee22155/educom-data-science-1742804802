@@ -7,7 +7,7 @@ $ jq '.[]' < world-population.json
 $ jq "[.[] | {country, population_density_1970: (.population_1970 / .area_km2)}]" world-population.json
 
 ----2----
-jq "group_by(.continent) |
+$ jq "group_by(.continent) |
     map({continent: .[0].continent,
          growth: ((map(.population_2022) | add) - (map(.population_1970) | add))})" world-population.json
 
@@ -26,10 +26,10 @@ $ jq "group_by(.continent) |
          }})" world-population.json
 
 ----4----
-$ jq "group_by(.continent) | 
-    map({ 
-        continent: .[0].continent, 
-        percentage_world_population: ( (map(.population_2022) | add) / ([.[] | map(.population_2022) | add]) * 100 )
+$ jq "group_by(.continent) |
+    map({
+        continent: .[0].continent,
+        percentage_world_population: (((map(.population_2022) | add) / (map(.population_2022) | add)) * 100)
     })" world-population.json
 
 
