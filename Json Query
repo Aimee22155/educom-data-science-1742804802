@@ -26,11 +26,12 @@ $ jq "group_by(.continent) |
          }})" world-population.json
 
 ----4----
-$ jq "group_by(.continent) |
-    map({
-        continent: .[0].continent,
-        percentage_world_population: (((map(.population_2022) | add) / (map(.population_2022) | add)) * 100)
+$ jq "group_by(.continent) | 
+    map({ 
+        continent: .[0].continent, 
+        percentage_world_population: ( (map(.population_2022) | add) / ([.[] | map(.population_2022) | add]) * 100 )
     })" world-population.json
+
 
 ----5----
 $ jq "group_by(.continent) |
