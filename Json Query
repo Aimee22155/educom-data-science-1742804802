@@ -38,11 +38,26 @@ $ jq "group_by(.continent) |
          growth_percentage: ((((map(.population_2022) | add) - (map(.population_1970) | add)) /
          (map(.population_1970) | add)) * 100) })" world-population.json > output-5.json < output-4.json
 
-----6----
+---- 6a ----
+jq -s '.[0] as $original |
+       .[1] as $out1 |
+       .[2] as $out2 |
+       .[3] as $out3 |
+       .[4] as $out4 |
+       .[5] as $out5 |
+       {original: $original, output_1: $out1, output_2: $out2, output_3: $out3, output_4: $out4, output_5: $out5}' \
+       world-population.json output-1.json output-2.json output-3.json output-4.json output-5.json > combined-output.json
+
+
+----6b----
 $ jq -r '(["rank", "cca3", "country", "capital", "continent", 
-         "population_2022", "population_2020", "population_2015", "population_2010", "population_2000", "population_1990", "population_1980", "population_1970", 
-         "area_km2", "population_density", "population_growth_rate", "percentage_world_population"] 
- | @csv), (.[] | [.rank, .cca3, .country, .capital, .continent, 
-         .population_2022, .population_2020, .population_2015, .population_2010, .population_2000, .population_1990, .population_1980, .population_1970, 
-         .area_km2, .population_density, .population_growth_rate, .percentage_world_population] | @csv)' world-population.json > world-population.csv 
+         "population_2022", "population_2020", "population_2015", "population_2010", "population_2000", 
+         "population_1990", "population_1980", "population_1970", "area_km2", "population_density", 
+         "population_growth_rate", "percentage_world_population"] 
+ | @csv), 
+ (.original[] | [.rank, .cca3, .country, .capital, .continent, 
+                 .population_2022, .population_2020, .population_2015, .population_2010, .population_2000, 
+                 .population_1990, .population_1980, .population_1970, .area_km2, .population_density, 
+                 .population_growth_rate, .percentage_world_population] | @csv)' combined-output.json > combined-output.csv
+
 
