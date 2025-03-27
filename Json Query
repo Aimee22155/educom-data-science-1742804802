@@ -40,9 +40,9 @@ $ jq "group_by(.continent) |
 
 ----6----
 $ jq -r '(["rank", "cca3", "country", "capital", "continent", 
-        "population_2022", "population_2020", "population_2015", "population_2010", "population_2000", "population_1990", "population_1980", "population_1970", 
-        "area_km2", "population_density", "population_growth_rate", "percentage_world_population"] 
-| @csv), (.[] | [.rank, .cca3, .country, .capital, .continent, 
-        .population_2022, .population_2020, .population_2015, .population_2010, .population_2000, .population_1990, .population_1980, .population_1970, 
-        .area_km2, .population_density, .population_growth_rate, .percentage_world_population] | @csv)' world-population.json > world-population.csv 
+         "population_2022", "population_2020", "population_2015", "population_2010", "population_2000", "population_1990", "population_1980", "population_1970", 
+         "area_km2", "population_density", "population_growth_rate", "percentage_world_population"] 
+ | @csv), (.[] | [.rank, .cca3, .country, .capital, .continent, 
+         .population_2022, .population_2020, .population_2015, .population_2010, .population_2000, .population_1990, .population_1980, .population_1970, 
+         .area_km2, .population_density, .population_growth_rate, .percentage_world_population] | @csv)' world-population.json > world-population.csv 
 
