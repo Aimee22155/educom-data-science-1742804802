@@ -39,5 +39,5 @@ $ jq "group_by(.continent) |
          (map(.population_1970) | add)) * 100) })" world-population.json
 
 ----6----
-
+jq -r '.[] | @csv'
 
