@@ -1,13 +1,43 @@
-----1----
-Asus@LAPTOP-SELUM529 MINGW64 ~
+----0----
 $ cd bin
-
-Asus@LAPTOP-SELUM529 MINGW64 ~/bin
 $ dir
-jq.exe  slownodes.jq  world-population.json
-
-Asus@LAPTOP-SELUM529 MINGW64 ~/bin
 $ jq '.[]' < world-population.json
 
+----1----
+$ jq "[.[] | {country, population_density_1970: (.population_1970 / .area_km2)}]" world-population.json
+
 ----2----
+jq "group_by(.continent) |
+    map({continent: .[0].continent,
+         growth: ((map(.population_2022) | add) - (map(.population_1970) | add))})" world-population.json
+
+----3----
+$ jq "group_by(.continent) |
+    map({continent: .[0].continent,
+         population_per_year: {
+           \"1970\": (map(.population_1970) | add),
+           \"1980\": (map(.population_1980) | add),
+           \"1990\": (map(.population_1990) | add),
+           \"2000\": (map(.population_2000) | add),
+           \"2010\": (map(.population_2010) | add),
+           \"2015\": (map(.population_2015) | add),
+           \"2020\": (map(.population_2020) | add),
+           \"2022\": (map(.population_2022) | add)
+         }})" world-population.json
+
+----4----
+$ jq "group_by(.continent) |
+    map({
+        continent: .[0].continent,
+        percentage_world_population: (((map(.population_2022) | add) / (map(.population_2022) | add)) * 100)
+    })" world-population.json
+
+----5----
+$ jq "group_by(.continent) |
+    map({continent: .[0].continent,
+         growth_percentage: ((((map(.population_2022) | add) - (map(.population_1970) | add)) /
+         (map(.population_1970) | add)) * 100) })" world-population.json
+
+----6----
+
 
