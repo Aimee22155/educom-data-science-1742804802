@@ -4,12 +4,12 @@ $ dir
 $ jq '.[]' < world-population.json
 
 ----1----
-$ jq "[.[] | {country, population_density_1970: (.population_1970 / .area_km2)}]" world-population.json
+$ jq "[.[] | {country, population_density_1970: (.population_1970 / .area_km2)}]" world-population.json > output-1.json < world-population.json
 
 ----2----
 $ jq "group_by(.continent) |
     map({continent: .[0].continent,
-         growth: ((map(.population_2022) | add) - (map(.population_1970) | add))})" world-population.json
+         growth: ((map(.population_2022) | add) - (map(.population_1970) | add))})" world-population.json > output-2.json < output-1.json
 
 ----3----
 $ jq "group_by(.continent) |
@@ -23,20 +23,20 @@ $ jq "group_by(.continent) |
            \"2015\": (map(.population_2015) | add),
            \"2020\": (map(.population_2020) | add),
            \"2022\": (map(.population_2022) | add)
-         }})" world-population.json
+         }})" world-population.json > output-3.json < output-2.json
 
 ----4----
 $ jq "group_by(.continent) |
     map({
         continent: .[0].continent,
         percentage_world_population: (((map(.population_2022) | add) / (map(.population_2022) | add)) * 100)
-    })" world-population.json
+    })" world-population.json > output-4.json < output-3.json
 
 ----5----
 $ jq "group_by(.continent) |
     map({continent: .[0].continent,
          growth_percentage: ((((map(.population_2022) | add) - (map(.population_1970) | add)) /
-         (map(.population_1970) | add)) * 100) })" world-population.json
+         (map(.population_1970) | add)) * 100) })" world-population.json > output-5.json < output-4.json
 
 ----6----
 $ jq -r '(["rank", "cca3", "country", "capital", "continent", 
@@ -44,5 +44,5 @@ $ jq -r '(["rank", "cca3", "country", "capital", "continent",
         "area_km2", "population_density", "population_growth_rate", "percentage_world_population"] 
 | @csv), (.[] | [.rank, .cca3, .country, .capital, .continent, 
         .population_2022, .population_2020, .population_2015, .population_2010, .population_2000, .population_1990, .population_1980, .population_1970, 
-        .area_km2, .population_density, .population_growth_rate, .percentage_world_population] | @csv)' world-population.json > world-population.csv 
+        .area_km2, .population_density, .population_growth_rate, .percentage_world_population] | @csv)' output-5.json > world-population.csv 
 
