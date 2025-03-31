@@ -33,7 +33,7 @@ $ jq "group_by(.continent) |
     }) as \$continents |
     (\$continents | map(.population) | add) as \$total_population |
     \$continents |
-    map(. + {percentage: (.population * 100 / \$total_population)})" world-population.json > output4.json < output-3.json
+    map(. + {percentage: (.population * 100 / \$total_population)})" world-population.json > output-4.json < output-3.json
 
 
 ----5----
@@ -42,15 +42,10 @@ $ jq "group_by(.continent) |
          growth_percentage: ((((map(.population_2022) | add) - (map(.population_1970) | add)) /
          (map(.population_1970) | add)) * 100) })" world-population.json > output-5.json < output-4.json
 
-??---- 6 ----??
-$ jq -r '(["rank", "cca3", "country", "capital", "continent", 
-         "population_2022", "population_2020", "population_2015", "population_2010", "population_2000", 
-         "population_1990", "population_1980", "population_1970", "area_km2", "population_density", 
-         "population_growth_rate", "percentage_world_population"] 
- | @csv), 
- (.original[] | [.rank, .cca3, .country, .capital, .continent, 
-                 .population_2022, .population_2020, .population_2015, .population_2010, .population_2000, 
-                 .population_1990, .population_1980, .population_1970, .area_km2, .population_density, 
-                 .population_growth_rate, .percentage_world_population] | @csv)' world-population.json > combined-output.csv
+---- 6 ----
+$ jq -s add output-1.json output-2.json output-3.json output-4.json output-5.json > merged.json
+
+
+
 
 
