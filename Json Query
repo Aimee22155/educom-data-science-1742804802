@@ -56,3 +56,4 @@ B:     $ jq -r "(
 C:     $ jq "map(
           with_entries(.value |= (if . == null then null else . end))
         )"
+
