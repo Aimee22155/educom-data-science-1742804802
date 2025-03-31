@@ -49,7 +49,6 @@ B:     $ jq -r "(["country", "population_density_1970", "continent", "growth", "
          | @csv), 
          (.[] | [.country, .population_density_1970, .continent, .growth, .population_per_year, .population, .percentage, .growth_percentage] | @csv)" merged.json > merged-output.csv
               
-jq: error (at merged.json:1094): object ({"1970":365...) is not valid in a csv row
-
-
-
+C:     $ jq "map(
+          with_entries(.value |= (if . == null then null else . end))
+        )"
