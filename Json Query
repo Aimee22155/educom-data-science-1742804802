@@ -43,9 +43,15 @@ $ jq "group_by(.continent) |
          (map(.population_1970) | add)) * 100) })" world-population.json > output-5.json < output-4.json
 
 ---- 6 ----
-$ jq -s add output-1.json output-2.json output-3.json output-4.json output-5.json > merged.json
+A.     $ jq -s add output-1.json output-2.json output-3.json output-4.json output-5.json > merged.json
 
-
+B:     $ jq -r '(["country", "population_density_1970", "continent", "growth", "population_per_year", "population", "percentage", "growth_percentage"]
+         | @csv), 
+         (.[] | [.country, .population_density_1970, .continent, .growth, .population_per_year, .population, .percentage, .growth_percentage] | @csv)' merged.json > merged-output.csv
+        
+bash: $: command not found
+       
+jq: error (at merged.json:1094): object ({"1970":365...) is not valid in a csv row
 
 
 
