@@ -45,9 +45,13 @@ $ jq "group_by(.continent) |
 ---- 6 ----
 A.     $ jq -s add output-1.json output-2.json output-3.json output-4.json output-5.json > merged.json
 
-B:     $ jq -r "(["country", "population_density_1970", "continent", "growth", "population_per_year", "population", "percentage", "growth_percentage"]
-         | @csv), 
-         (.[] | [.country, .population_density_1970, .continent, .growth, .population_per_year, .population, .percentage, .growth_percentage] | @csv)" merged.json > merged-output.csv
+B:     $ jq -r "(
+                        ["country", "population_density_1970", "continent", "growth", "population_per_year", "population", "percentage", "growth_percentage"]
+             | @csv), 
+             (.[] | 
+                        [.country, .population_density_1970, .continent, .growth, .population_per_year, .population, .percentage, .growth_percentage] 
+             | @csv
+        )" merged.json > merged-output.csv
               
 C:     $ jq "map(
           with_entries(.value |= (if . == null then null else . end))
