@@ -43,19 +43,25 @@ $ jq "group_by(.continent) |
          (map(.population_1970) | add)) * 100) })" world-population.json > output-5.json < output-4.json
 
 ---- 6 ----
+$ jq -r "(["country", "population_density_1970"]| @csv), (.[] | [.country, .population_density_1970]| @csv)" output-1.json > output-1.csv
+
+$ jq -r "(["continent", "growth"]| @csv), (.[] | [.continent, .growth]| @csv)" output-2.json > output-2.csv
+
+$ jq -r "(["continent", "growth", "population_per_year"]| @csv), (.[] | [.continent, .growth, .population_per_year]| @csv)" output-3.json > output-3.csv
+
+$ jq -r "(["continent", "population", "percentage"]| @csv), (.[] | [.continent, .population, .percentage]| @csv)" output-4.json > output-4.csv
+
+$ jq -r "(["continent", "growth_percentage"]| @csv), (.[] | [.continent, .growth_percentage]| @csv)" output-5.json > output-5.csv
+
+
+---oude optie's-------
 A.  $jq -s add output-1.json output-2.json output-3.json output-4.json output-5.json > merged.json
 
 B:  $jq "[.[] | objects] | reduce .[] as \$item ({}; . * \$item) 
         | keys_unsorted as \$keys | map(with_entries(.key as \$k | .value = if has(\$k) then .[\$k] else null end))" merged.json
-
-
         jq: error (at merged.json:1094): string ("Zimbabwe") has no keys
+---------------------
 
 
-C:     $ jq -r "(
-                        ["country", "population_density_1970", "continent", "growth", "population_per_year", "population", "percentage", "growth_percentage"]
-             | @csv), 
-             (.[] | 
-                        [.country, .population_density_1970, .continent, .growth, .population_per_year, .population, .percentage, .growth_percentage] 
-             | @csv
-        )" merged.json > merged-output.csv
+----7----
+
