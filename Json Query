@@ -43,28 +43,11 @@ $ jq "group_by(.continent) |
          (map(.population_1970) | add)) * 100) })" world-population.json > output-5.json < output-4.json
 
 ---- 6 ----
-1:     $ jq -r '(["country", "population_density_1970"] | @csv), (.[] | [.country, .population_density_1970] | @csv)' output-1.json > output-1.csv
-
-2:     $ jq -r '(["continent", "growth"]| @csv), (.[] | [.continent, .growth]| @csv)' output-2.json > output-2.csv
-
-3a:    $ jq -r '(["continent", "population_per_year"]| @csv), (.[] | [.continent, (.population_per_year | to_entries[] | .value)] | @csv)' output-3.json > output-3.csv
-
-3b:    $ jq -r '(["continent"] + ([.[] | .population_per_year | keys[]] | unique)), (.[] | [.continent, (.population_per_year | to_entries[] | .value)] | @csv)' output-3.json > output-3.csv
-
-4:     $ jq -r '(["continent", "population", "percentage"]| @csv), (.[] | [.continent, .population, .percentage]| @csv)' output-4.json > output-4.csv
-
-5:     $ jq -r '(["continent", "growth_percentage"]| @csv), (.[] | [.continent, .growth_percentage]| @csv)' output-5.json > output-5.csv
-
-
-
----oude optie's-------
-A.  $jq -s add output-1.json output-2.json output-3.json output-4.json output-5.json > merged.json
-
-B:  $jq "[.[] | objects] | reduce .[] as \$item ({}; . * \$item) 
-        | keys_unsorted as \$keys | map(with_entries(.key as \$k | .value = if has(\$k) then .[\$k] else null end))" merged.json
-        jq: error (at merged.json:1094): string ("Zimbabwe") has no keys
----------------------
-
+1:    $ jq -r '(["country", "population_density_1970"] | @csv), (.[] | [.country, .population_density_1970] | @csv)' output-1.json > output-1.csv
+2:    $ jq -r '(["continent", "growth"]| @csv), (.[] | [.continent, .growth]| @csv)' output-2.json > output-2.csv
+3:    $ jq -r '(["continent"] + ([.[] | .population_per_year | keys[]] | unique)), (.[] | [.continent, (.population_per_year | to_entries[] | .value)] | @csv)' output-3.json > output-3.csv
+4:    $ jq -r '(["continent", "population", "percentage"]| @csv), (.[] | [.continent, .population, .percentage]| @csv)' output-4.json > output-4.csv
+5:    $ jq -r '(["continent", "growth_percentage"]| @csv), (.[] | [.continent, .growth_percentage]| @csv)' output-5.json > output-5.csv
 
 ----7----
 
