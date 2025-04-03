@@ -1,9 +1,10 @@
 import requests
 import json
+import duckdb
 
 # Basisinstellingen
 base_currency = "USD"
-target_currencies = ["EUR", "GBP", "JPY"]
+db_filename = "database_1.duckdb"
 
 def get_exchange_rates():
     # API URL met de basisvaluta
@@ -20,21 +21,26 @@ def get_exchange_rates():
             print("Er is een probleem met de API.")
             return
 
-        # Sla de response op in een JSON-bestand
-        with open("exchange_rates.json", "w") as f:
+       # Sla de response op in een JSON-bestand
+        with open("exchange_rates2.json", "w") as f:
             json.dump(raw_data, f, indent=4)
 
-        print("De API-response is opgeslagen in 'exchange_rates.json'.")
+        # Toon de ruwe JSON-response
+        print("Ruwe API-response:")
+        print(json.dumps(raw_data, indent=4))
 
-        # Toon de wisselkoersen
-        print("\nWisselkoersen:")
-        for currency in target_currencies:
-            rate = raw_data.get("conversion_rates", {}).get(currency)
-            if rate:
-                print(f"1 {base_currency} = {rate} {currency}")
-            else:
-                print(f"Valuta '{currency}' niet gevonden.")
+        # Verbinding maken met de DuckDB-database (of maak deze aan als deze niet bestaat)
+        conn = duckdb.connect(db_filename)
 
+ 
+        # # JSON-bestand laden als tabel
+        # conn.execute("""
+        #     CREATE TABLE exchange_rates AS
+        #     SELECT * FROM read_json_auto('exchange_rates2.json');
+        # """)
+
+        conn.close
+  
     except requests.RequestException as e:
         print(f"Er is een fout bij het ophalen van de data: {e}")
 
