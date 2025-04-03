@@ -33,11 +33,11 @@ def get_exchange_rates():
         conn = duckdb.connect(db_filename)
 
  
-        # # JSON-bestand laden als tabel
-        # conn.execute("""
-        #     CREATE TABLE exchange_rates AS
-        #     SELECT * FROM read_json_auto('exchange_rates2.json');
-        # """)
+        # JSON-bestand laden als tabel
+        conn.execute("""
+            CREATE TABLE exchange_rates AS
+            SELECT * FROM read_json_auto('exchange_rates2.json');
+        """)
 
         conn.close
   
