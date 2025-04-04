@@ -1,3 +1,10 @@
+python "C:\Users\Asus\OneDrive\Documenten\Educom\Regex\regex_2.py" 
+-p "04-04-2025" 
+-d "C:\Users\Asus\OneDrive\Documenten\Educom\Regex\test_regex_3.pdf" 
+-o "C:\Users\Asus\OneDrive\Documenten\Educom\Regex\output_2.html"
+
+----------
+
 import os
 import re
 import PyPDF2
