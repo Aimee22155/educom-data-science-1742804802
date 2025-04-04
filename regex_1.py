@@ -1,3 +1,10 @@
+----test----
+python "C:\Users\Asus\OneDrive\Documenten\Educom\Regex\regex_1.py" 
+-p "Test" 
+-f "C:\Users\Asus\OneDrive\Documenten\Educom\Regex\test_regex.pdf" 
+-o "C:\Users\Asus\OneDrive\Documenten\Educom\Regex\output.html"
+
+----script----
 import re
 import PyPDF2
 import argparse
