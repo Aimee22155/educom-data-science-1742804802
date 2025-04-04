@@ -1,0 +1,26 @@
+Onderdeel	Wat het doet
+`^(?:0	+31
+(?:-)?	Optioneel streepje na +31/0031
+`(?:6	[1-9][0-9]{1,2})`
+[1-9][0-9]{6,7}	Subscriber number: 7-8 cijfers, niet beginnend met 0
+(?:\s*-?\s*)	Eén optioneel streepje tussen netnummer en abonnee
+^\s* & \s*$	Eventuele spaties voor of na het telefoonnummer
+
+---Opdracht 1---
+
+^(?:\s*)                             # Optional leading spaces
+(?:0|\+31|0031)(?:-)?                # Starting with 0, +31 or 0031 (optional dash)
+(?:\s*)                              # Optional spaces
+(?:6|[1-9][0-9]{1,2})                # Area code: 6 or 2-3 digits not starting with 0
+(?:\s*-?\s*)                         # Optional dash/spaces between area code and number
+[1-9][0-9]{6,7}                      # Subscriber number (7 or 8 digits, no leading 0)
+(?:\s*)$                             # Optional trailing spaces
+
+---Opdracht 2---
+(?i)^(?P<protocol>https?|ftp):\/\/
+(?:(?P<user>[^:@\/?#]+)(?::(?P<password>[^@\/?#]*))?@)?
+(?P<hostname>[^:\/?#]+)
+(?::(?P<port>\d+))?
+(?P<path>\/[^?#]*)?
+(?:\?(?P<query>[^#]*))?
+(?:#(?P<fragment>.*))?$
