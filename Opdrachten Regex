@@ -1,11 +1,3 @@
-Onderdeel	Wat het doet
-`^(?:0	+31
-(?:-)?	Optioneel streepje na +31/0031
-`(?:6	[1-9][0-9]{1,2})`
-[1-9][0-9]{6,7}	Subscriber number: 7-8 cijfers, niet beginnend met 0
-(?:\s*-?\s*)	Eén optioneel streepje tussen netnummer en abonnee
-^\s* & \s*$	Eventuele spaties voor of na het telefoonnummer
-
 ---Opdracht 1---
 
 ^(?:\s*)                             # Optional leading spaces
@@ -24,3 +16,25 @@ Onderdeel	Wat het doet
 (?P<path>\/[^?#]*)?
 (?:\?(?P<query>[^#]*))?
 (?:#(?P<fragment>.*))?$
+
+# Start of the string.       
+# Named group protocol that captures http, https, or ftp.       
+# Matches :// literally, separating protocol from the rest.
+
+# Non-capturing group for optional user info. (?P<user>[^:@\/?#]+): Named group user — captures characters until a :, /, ?, or # (but not including them).
+# (?::(?P<password>[^@\/?#]*))?: Optional password (starts with : and captures characters until @, /, ?, or #).
+@: Literal @ separating credentials from the hostname.
+The whole block is optional (note the outer (?: ... )?).
+
+# Named group hostname: Captures the domain name or IP address — until it hits :, /, ?, or #.
+# Optional port (e.g., :8080). 
+# (?P<port>\d+): Named group port capturing one or more digits.  
+
+# Optional path after the hostname.
+# (?P<path>\/[^?#]*): Named group path capturing a / followed by anything except ? or #.
+
+# Optional query string (e.g., ?search=hello).
+# (?P<query>[^#]*): Named group query capturing everything after ? until # or end.
+
+# Optional fragment identifier (e.g., #top).
+# (?P<fragment>.*): Named group fragment capturing everything after #.
