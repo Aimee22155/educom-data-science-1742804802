@@ -9,6 +9,7 @@
 (?:\s*)$                             # Optional trailing spaces
 
 ---Opdracht 2---
+
 (?i)^(?P<protocol>https?|ftp):\/\/
 (?:(?P<user>[^:@\/?#]+)(?::(?P<password>[^@\/?#]*))?@)?
 (?P<hostname>[^:\/?#]+)
