@@ -1,0 +1,12 @@
+PS C:\Users\Asus\OneDrive\Documenten\Educom\Database> cd 'c:/XAMPP/mysql/bin'
+PS C:\XAMPP\mysql\bin> cd 'C:\Users\Asus\OneDrive\Documenten\Educom\Database'
+PS C:\Users\Asus\OneDrive\Documenten\Educom\Database> python Database_2.py -q query.sql
+Uitgevoerde query:
+SELECT * FROM countries
+order by id desc;
+    id  rank cca3            country    capital continent  area_km2
+0  234    74  ZWE           Zimbabwe     Harare    Africa  390757.0
+1  233    63  ZMB             Zambia     Lusaka    Africa  752612.0
+2  232    46  YEM              Yemen      Sanaa      Asia  527968.0
+3  231   172  ESH     Western Sahara  El AaiÃºn    Africa  266000.0
+4  230   226  WLF  Wallis and Futuna   Mata-Utu   Oceania     142.0
