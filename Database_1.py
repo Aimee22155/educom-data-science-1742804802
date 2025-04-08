@@ -1,4 +1,5 @@
 import json
+import csv
 
 # importeer de JSON-data
 with open("world-population.json", "r", encoding="utf-8") as file:
@@ -47,8 +48,32 @@ combined_data = {
     "entities": entities
 }
 
-# Schrijf alles weg naar één bestand
+# Schrijf alles weg naar één JSON-bestand
 with open("world-data.json", "w", encoding="utf-8") as f:
     json.dump(combined_data, f, indent=2)
 
 print("Alles opgeslagen in world-data.json")
+
+# Combineer de data voor de CSV
+# Voeg beide lijsten samen, bijvoorbeeld in een format waar we 'type' toevoegen voor identificatie.
+combined_csv_data = []
+
+# Voeg countries en entities samen in een lijst van dictionaries
+for country in countries:
+    combined_csv_data.append({"type": "country", **country})
+    
+for entity in entities:
+    combined_csv_data.append({"type": "entity", **entity})
+
+# Schrijf alles naar één CSV-bestand
+with open("combined-world-data.csv", "w", newline='', encoding="utf-8") as f:
+    fieldnames = ['type'] + list(countries[0].keys())  # Voeg 'type' als eerste kolom toe
+    # Voeg de veldnamen voor entities toe, behalve type
+    if entities:
+        fieldnames.extend(list(entities[0].keys()))
+    
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(combined_csv_data)
+
+print("Alles opgeslagen in combined-world-data.csv")
