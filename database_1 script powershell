@@ -1,0 +1,17 @@
+cd 'c:/XAMPP/mysql/bin'
+mysql -u root
+USE mijn_database
+LOAD DATA LOCAL INFILE 'C:/Documenten Educom/countries.csv'
+    -> INTO TABLE countries
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES
+    -> (id, `rank`, cca3, country, capital, continent, area_km2);
+
+LOAD DATA LOCAL INFILE 'C:/Documenten Educom/entities.csv'
+    -> INTO TABLE entities
+    -> FIELDS TERMINATED BY ','
+    -> LINES TERMINATED BY '\n'
+    -> IGNORE 1 LINES
+    -> (id, country_id, `year`, population);
+
