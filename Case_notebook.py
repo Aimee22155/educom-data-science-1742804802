@@ -11,7 +11,7 @@ city_temperatures= 'city_temperatures'
 state_temperatures= 'state_temperatures'
 global_temperatures= 'global_temperatures'
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(countries, engine)
 print(df.head())
@@ -35,10 +35,10 @@ for column in df.columns:
 print("\nDataFrame na het vervangen van ontbrekende numerieke waarden door het gemiddelde:")
 print(df.head())
 
-df.to_sql('countries', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{countries}' is opgeslagen in tabel 'countries'.")
+df.to_sql('opgeschoond_countries', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{countries}' is opgeslagen in tabel 'opgeschoond_countries'.")
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(cities, engine)
 print(df.head())
@@ -62,10 +62,10 @@ for column in df.columns:
 print("\nDataFrame na het vervangen van ontbrekende numerieke waarden door het gemiddelde:")
 print(df.head())
 
-df.to_sql('cities', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{cities}' is opgeslagen in tabel 'cities'.")
+df.to_sql('opgeschoond_cities', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{cities}' is opgeslagen in tabel 'opgeschoond_cities'.")
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(states, engine)
 print(df.head())
@@ -89,10 +89,10 @@ for column in df.columns:
 print("\nDataFrame na het vervangen van ontbrekende numerieke waarden door het gemiddelde:")
 print(df.head())
 
-df.to_sql('states', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{states}' is opgeslagen in tabel 'states'.")
+df.to_sql('opgeschoond_states', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{states}' is opgeslagen in tabel 'opgeschoond_states'.")
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(country_temperatures, engine)
 print(df.head())
@@ -113,10 +113,10 @@ for column in df.columns:
         else:
             print(f"Kolom '{column}' bevat ontbrekende waarden maar is niet numeriek. Overweeg een andere strategie.")
 
-df.to_sql('country_temperatures', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{country_temperatures}' is opgeslagen in tabel 'country_temperatures'.")
+df.to_sql('opgeschoond_country_temperatures', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{country_temperatures}' is opgeslagen in tabel 'opgeschoond_country_temperatures'.")
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(city_temperatures, engine)
 print(df.head())
@@ -137,10 +137,10 @@ for column in df.columns:
         else:
             print(f"Kolom '{column}' bevat ontbrekende waarden maar is niet numeriek. Overweeg een andere strategie.")
 
-df.to_sql('city_temperatures', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{city_temperatures}' is opgeslagen in tabel 'city_temperatures'.")
+df.to_sql('opgeschoond_city_temperatures', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{city_temperatures}' is opgeslagen in tabel 'opgeschoond_city_temperatures'.")
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(state_temperatures, engine)
 print(df.head())
@@ -161,10 +161,10 @@ for column in df.columns:
         else:
             print(f"Kolom '{column}' bevat ontbrekende waarden maar is niet numeriek. Overweeg een andere strategie.")
 
-df.to_sql('state_temperatures', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{state_temperatures}' is opgeslagen in tabel 'state_temperatures'.")
+df.to_sql('opgeschoond_state_temperatures', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{state_temperatures}' is opgeslagen in tabel 'opgeschoond_state_temperatures'.")
 
---------------------------------------------
+#--------------------------------------------
 
 df = pd.read_sql_table(global_temperatures, engine)
 print(df.head())
@@ -185,5 +185,5 @@ for column in df.columns:
         else:
             print(f"Kolom '{column}' bevat ontbrekende waarden maar is niet numeriek. Overweeg een andere strategie.")
 
-df.to_sql('global_temperatures', engine, if_exists='replace', index=False)
-print(f"\nOpgeschoonde data van '{global_temperatures}' is opgeslagen in tabel 'global_temperatures'.")
+df.to_sql('opgeschoond_global_temperatures', engine, if_exists='replace', index=False)
+print(f"\nOpgeschoonde data van '{global_temperatures}' is opgeslagen in tabel 'opgeschoond_global_temperatures'.")
